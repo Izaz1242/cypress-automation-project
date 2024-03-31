@@ -23,3 +23,17 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+//let getbseUrl = Cypress.env("baseUrl");
+Cypress.Commands.add("getRequest", (url) => {
+  //let requesturl = getbseUrl + url;
+  return cy
+    .request({
+      method: "GET",
+      url: url,
+      //failOnStatusCode: false,
+    })
+    .then((response) => {
+      return response;
+    });
+});

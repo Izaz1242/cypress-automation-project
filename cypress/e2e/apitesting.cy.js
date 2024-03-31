@@ -19,7 +19,7 @@ describe("HTTP Requests", () => {
       .should("equal", 201);
   });
 
-  it.only("POST Call", () => {
+  it("POST Call", () => {
     cy.fixture("softcode").then((requestBody) => {
       cy.request({
         method: "POST",
@@ -37,6 +37,22 @@ describe("HTTP Requests", () => {
         expect(body).to.eq(requestBodyBody);
         expect(userId).to.eq(requestBodyUserId);
       });
+    });
+  });
+
+  it("GET call frm Commnd", () => {
+    let requesturl = "https://jsonplaceholder.typicode.com//posts/1";
+    //let requesturl = Cypress.env("baseUrl") + "posts/1";
+    cy.getRequest(requesturl).then((response) => {
+      cy.log("Gt request Response is " + JSON.stringify(response));
+
+      expect(response.status).to.equal(200);
+      expect(response.body).to.have.property("userId", 1);
+      expect(response.body).to.have.property("id", 1);
+      expect(response.body).to.have.property(
+        "title",
+        "sunt aut facere repellat provident occaecati excepturi optio reprehenderit"
+      );
     });
   });
 });
